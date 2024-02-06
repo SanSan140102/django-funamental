@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} news pages {% endblock title %}
+
+{% block content %}
+
+<div class="row g-5">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom">
+        From the Firehose
+      </h3>
+      <article class="blog-post">
+        <img src="{{ news_category.image.url }}" alt="{{ news_category.title }}" style="width: 100%;object-fit: contain;">
+        <h2 class="display-5 link-body-emphasis mb-1 mt-2">{{ news_category.title }} </h2>
+        <p class="blog-post-meta">{{ news_detail.tanggal }} by <a href="#">Author</a></p>
+        <p>{{ news_category.deskripsi|safe }}</p>
+    </article>
+   
+
+</div>
+<div class="col-md-4">
+    {% include 'sidebar_kanan.html' %}
+</div>
+</div>
+
+{% endblock  %}

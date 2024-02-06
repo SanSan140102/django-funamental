@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} artikel {% endblock title %}
+
+{% block content %}
+
+    <h2> Halaman Artikel </h2>
+    <a href="{% url 'artikel.create' %}"class="btn btn-primary">+ADD New</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>No.</td>
+                <td>Title</td>
+                <td>Body</td>
+                <td>#opsi</td>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for item in data_artikel %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.body}}</td>
+                <td>
+                    <a href="{% url 'artikel.delete' item.id %}" class="btn btn-outline-primary btn-sm">delete</a>
+                    |
+                    <a href="{% url 'artikel.edit' item.id %}" class="btn btn-outline-primary btn-sm">edit</a>
+                </td>
+
+
+            </tr>
+            {% endfor %}
+         </tbody>
+    </table>
+
+
+{% endblock content %} 

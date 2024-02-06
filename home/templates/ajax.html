@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %} Django | load ajax {% endblock title %}
+
+{% block content %}
+
+<h1>Load ajax</h1>
+
+<button class="btn btn-primary" id="mybutton">Show data</button>
+
+<div id="tampilData"></div>
+<div id="tampilClub"></div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+    $(document).ready(function () {
+        $('#mybutton').click(function(){
+            $('#tampilData').html('<i>Loading.....</i>');
+            $.ajax({
+                type: "GET",
+                url: "/ajax/data/",
+                dataType: "json",
+                success: function (response) {
+
+                    var result = `<p>Nama :${response.nama}</p> <p>Alamat :${response.alamat}</p>`;
+                    var clubHtml = '<ul>';
+
+                    var club = response.club;
+                    club.forEach(element => {
+                        clubHtml += `<li>Nama Club: ${element["nama club"]}, Tahun Club: ${element["tahun club"]}</li>`;
+                    });
+
+                    clubHtml += '</ul>';
+                    result += clubHtml;
+
+                    setTimeout(() => {
+                        $('#tampilData').html(result);
+                        $('#tampilClub').html(clubHtml);
+                    }, 2000);
+                }
+            });
+        });
+    });
+
+</script>
+{% endblock script %}

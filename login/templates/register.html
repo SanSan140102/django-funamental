@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} news pages {% endblock title %}
+
+{% block content %}
+
+<h2 class="mb-4">Register</h2>
+{% if messages %}
+<div class="error-messages alert alert-danger">
+    {% for messages in messages %}
+    {{messages}}
+    {% endfor %}
+</div>
+{% endif %}
+
+{{ form.errors }}
+    {{ form.non_field_errors }}
+
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <div style="margin-bottom: 10px">
+        {{field.label_tag}} {{field}}
+        <small>{{field.erros}}</small>
+    </div>
+    {% endfor %}
+    <input type="submit"value="submit" class="btn btn-primary">
+</form>
+{% endblock %}

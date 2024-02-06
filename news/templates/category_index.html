@@ -1,0 +1,30 @@
+{% extends "base.html"%}
+
+{% block title %} category pages {% endblock title %}
+
+{% block content %}
+<h2 >{{title}}</h2>
+<a href="{%url 'category.create'%}" class="btn btn-outline-dark">Tambah Data</a>
+
+<table class="table table-striped">
+    <tr>
+      <th>category</th>
+      <th>action</th>
+    </tr>
+
+    {%for i in category%}
+    <tr>
+      <td>{{i.category}}</td>
+        <td>
+          <a href="{% url 'category.delete' i.id %}" class="btn btn-outline-primary btn-sm">delete</a>
+            |
+            <a href="{% url 'category.edit' i.id %}" class="btn btn-outline-primary btn-sm">edit</a>
+        </td>
+    </tr> 
+    {% endfor %}
+
+    
+</table>
+
+{%endblock%}
+

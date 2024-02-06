@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %} news pages {% endblock title %}
+
+{% block content %}
+
+<div class="row g-5">
+    <div class="col-md-8">
+        <h3 class="pb-4 mb-4 fst-italic border-bottom">
+            From the Firehose
+          </h3>
+         <article class="blog-post">
+            <img src="{{ news_detail.image.url }}" alt="{{ news_detail.title }}" style="width: 100%;object-fit: contain;">
+            <h2 class="display-5 link-body-emphasis mb-1 mt-2">{{ news_detail.title }} </h2>
+            <p class="blog-post-meta"> {{ news_detail.tanggal }}by <a href="#">Author</a></p>
+             views {{i.total_views}} | <button class="btn btn-sm btn-danger"id="btnlike" data-postId="{{news_detail.id}}">{{news_detail.like.count}}  SUKA </button>
+            <p>{{ news_detail.deskripsi|safe }}</p>
+            
+        </article>
+    
+   
+    <!-- templates/komentar_form.html -->
+
+    <form action ="{% url 'tambah_komentar' news_detail.slug %}" method="POST" enctype='multipart/form-data'>
+        {%csrf_token%}
+        {% for field in form %}
+            <div style ="margin-bottom:10px;">
+                {{field.label_tag}} {{field}}
+                <small> {{field.errors}}</small>
+                </div>
+            {% endfor %}
+        <input type="submit" value="submit">
+        
+      </form>
+      <br>
+      <h5>🎯komentar</h5>
+      {% for i in news_detail.komentar.all  %}
+      <div class="comment">
+        <p class="penulis">👤 {{i.penulis}}</p>
+        <p class="teks">{{i.teks}}</p>
+      </div>
+      <form action ="{% url 'replay' news_detail.slug i.id %}" method="POST" enctype='multipart/form-data'>
+        {%csrf_token%}
+        {% for field in formReplay  %}
+            <div style ="margin-bottom:10px;">
+                {{field.label_tag}} {{field}}
+                <small> {{field.errors}}</small>
+                </div>
+            {% endfor %}
+        <input type="submit" value="replay">
+        
+      </form>
+      <h5>🎯komentar Reply</h5>
+      {% for data in i.reply.all  %}
+      <div class="comment">
+        <p class="penulis">👤 {{i.penulis}}</p>
+        <p class="teks">{{i.teks}}</p>
+      </div>
+      {% endfor %}
+      <hr>
+      {% endfor %}
+      
+    </div>
+    <div class="col-md-4">
+        {% include 'sidebar_kanan.html' %}
+    </div>
+  </div>
+
+  {% endblock  %}
+
+  {% block script %}
+
+  <script>
+    $(document).ready(function(){
+      $('#btnlike').click(function(){
+        var postId =$(this).data('postid');
+        $.ajax({
+          type:"GET",
+          url:`/news/like/${postId}`,
+          dataType:"json",
+          success:function(response){
+            $('#btnlike').text(`${response.newsLikeCount} suka`)
+          }
+        })
+      })
+    })
+  </script>
+
+  {% endblock  %}

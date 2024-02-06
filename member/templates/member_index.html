@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+{% block title %}member pages{% endblock title %}
+{% block content %}
+ 
+<table class="table table-striped">
+    <a href="{%url 'member.create'%}">Tambah Member</a>
+    <tr>
+      <th>nama</th>
+      <th>alamat</th>
+      <th>no_telphon</th>
+      <th>jenis_kelamin</th>
+      <th>pekerjaan</th>
+      <th>aksi</th>
+      
+    </tr>
+
+    {%for i in member%}
+    <tr>
+      <td>{{i.nama}}</td>
+      <td>{{i.alamat}}</td>
+      <td>{{i.no_telphon}}</td>
+      <td>{{i.jenis_kelamain}}</td>
+      <td>{{i.pekerjaan}}</td>
+      <td>
+        <a href="{% url 'member.edit' i.id %}">edit</a>
+        |
+        <a href="{% url 'member.delete' i.id %}">delete</a>
+      </td>
+        
+    </tr> 
+    {% endfor %}
+
+
+
+</table>
+
+{%endblock content %}
+
+
+</html>

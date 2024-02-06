@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #22cc41;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+</head>
+<body>
+<h2>{{title}}</h2>
+<table>
+    <a href="{%url 'barang.create'%}">Tambah Data</a>
+    <tr>
+      <th>nama</th>
+      <th>size</th>
+      <th>warna</th>
+      
+    </tr>
+
+    {%for i in barang%}
+    <tr>
+      <td>{{i.nama_barang}}</td>
+      <td>{{i.size_barang}}</td>
+      <td>{{i.warna_barang}}</td>
+        
+    </tr> 
+    {% endfor %}
+
+    
+</table>
+
+
+
+</body>
+</html>
